@@ -1,41 +1,55 @@
-/*
- * Clash Verge Rev 主题 CSS 注入
- * 用途：自定义节点延迟指示器（the-delay）的颜色映射，将其与主题状态色绑定。
- * 使用方法：复制全部内容，粘贴到 Clash-Verge-Rev → 主题设置 → CSS注入 → CSS编辑器，保存即可。
+/* 
+ * Clash-Verge-Rev 主题自定义CSS - 节点延迟状态颜色映射
+ * 用途：修改代理节点延迟状态指示器的颜色显示
+ * 使用位置：Clash-Verge-Rev → 主题设置 → CSS注入 → CSS编辑器
+ * 
+ * 审计说明：
+ * 1. 此代码通过属性选择器覆盖原始应用的状态颜色
+ * 2. 每个规则使用!important确保样式优先级高于应用默认样式
+ * 3. 适用于Clash-Verge-Rev的节点延迟显示组件（.the-delay类）
+ * 4. 代码安全：仅修改颜色属性，不影响布局和功能
  */
 
-/*
- * 状态映射：error.main（错误 / 超时）
- * 将延迟显示为 error.main 状态的元素强制改为红色。
- * 对应通常的“超时”或“连接失败”等异常状态。
+/* 
+ * 错误状态映射 - 超时
+ * 选择器说明：匹配所有class包含"the-delay"且color属性值为"error.main"的div元素
+ * 设计意图：将错误状态从可能的默认蓝色改为更符合直觉的警示红色
+ * 颜色值 #ff4d4f 是Ant Design风格的错误红色，具有高辨识度
+ * 注意：!important确保覆盖应用内联样式，修改HEX值时请保持6位十六进制格式
  */
 div.the-delay[color="error.main"] {
-  color: #ff4d4f !important; /* 自定义错误状态颜色，默认浅红色，可自行替换为喜欢的红色 HEX 色值 */
+    color: #ff4d4f !important; /* 自定义错误状态颜色，默认浅红色，可自行替换为喜欢的红色 HEX 色值 */
 }
 
-/*
- * 状态映射：warning.main（警告 / 较高延迟）
- * 将原本可能显示为蓝色或其他颜色的 warning.main 状态强制改为黄色（警告色）。
- * 这样在视觉上更符合直觉：高延迟用黄色突出显示。
+/* 
+ * 警告状态映射 - 高延迟
+ * 选择器说明：匹配color属性值为"warning.main"的延迟指示器
+ * 设计意图：原始应用可能将此状态显示为蓝色（不符合警告语义），强制改为黄色
+ * 颜色值 #faad14 是Ant Design的警告色，比默认蓝色更能传达"需要注意"的信号
+ * 重要性：黄色在视觉层次中位于红色之下、绿色之上，符合延迟分级逻辑
  */
 div.the-delay[color="warning.main"] {
-  color: #faad14 !important; /* 强制修改为黄色，用于表示较高延迟的警告状态 */
+    color: #faad14 !important; /* 强制修改为黄色，用于表示较高延迟的警告状态 */
 }
 
-/*
- * 状态映射：success.main（成功 / 低延迟）
- * 将延迟显示为 success.main 状态的元素强制改为绿色。
- * 表示延迟较低，连接质量良好。
- */
-div.the-delay[color="success.main"] {
-  color: #52c41a !important; /* 绿色，表示正常 / 低延迟 */
-}
-
-/*
- * 状态映射：primary.main（主要 / 一般延迟）
- * 将延迟显示为 primary.main 状态的元素强制改为蓝色。
- * 一般用于中等延迟或默认主题强调色。
+/* 
+ * 主要状态映射 - 默认/一般延迟
+ * 选择器说明：匹配color属性值为"primary.main"的延迟指示器
+ * 设计意图：定义应用主色（通常是蓝色）在延迟显示中的具体表现
+ * 颜色值 #1976d2 是Material Design标准蓝色，比默认蓝色更深更专业
+ * 注意：此状态可能用于表示"正常但非最佳"的中间状态
  */
 div.the-delay[color="primary.main"] {
-  color: #1976d2 !important; /* 蓝色，表示普通或中等延迟 */
+    color: #1976d2 !important; /* 蓝色，表示普通或中等延迟 */
+}
+
+/* 
+ * 成功状态映射 - 低延迟/优质连接
+ * 选择器说明：匹配color属性值为"success.main"的延迟指示器
+ * 设计意图：明确标识优质节点，绿色是国际通用的"良好"状态标识色
+ * 颜色值 #52c41a 是Ant Design的成功色，比默认可能的浅绿色更醒目
+ * 用户体验：使用户能快速识别可优先选择的优质节点
+ */
+div.the-delay[color="success.main"] {
+    color: #52c41a !important; /* 绿色，表示正常 / 低延迟 */
 }
